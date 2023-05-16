@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+const props = defineProps({
+    title: String
+})
 const name = ref('')
 watch(name, (newValue) => {
     localStorage.setItem('name', newValue)
@@ -10,6 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <h1>{{ props.title }}</h1>
     <section class="greetings">
         <h1 :class="titleClass"> What's up
             <input type="text" v-model="name" />

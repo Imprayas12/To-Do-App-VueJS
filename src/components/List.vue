@@ -1,12 +1,13 @@
 <script setup>
 import {ref, computed} from 'vue';
-
+const emit = defineEmits(['deletedTask'])
 const buttonClass = ref("button")
 const taskClass = ref("task")
 const todos = ref(JSON.parse(localStorage.getItem('todos')) || [])
 const todos_asc = computed(() => todos.value.sort((a, b) => b.createdAt - a.createdAt));
 const deleteTask = todo => {
     todos.value = todos.value.filter(t => t != todo)
+    emit('deletedTask', todo.taskName)
 }
 </script>
 

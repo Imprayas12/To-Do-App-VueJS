@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch} from 'vue'
+const emit = defineEmits(['todo-added'])
 const input_content = ref('')
 const submitClass = ref('submit')
 const todos = ref(JSON.parse(localStorage.getItem('todos')) || [])
@@ -12,6 +13,7 @@ const addTodo = (e) => {
         hours: new Date().getHours(),
         mins: new Date().getMinutes()
     })
+    emit('todo-added', input_content.value)
 }
 
 watch(todos, newTodo => {
