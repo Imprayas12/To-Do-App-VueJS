@@ -1,6 +1,6 @@
 <script setup>
-import { doc, setDoc, updateDoc, where } from '@firebase/firestore';
-import {useRoute} from 'vue-router';
+import { collection, doc, getDoc, setDoc, updateDoc, where } from '@firebase/firestore';
+import {useRoute, useRouter} from 'vue-router';
 import db from '../firebase/init';
 import {ref} from 'vue';
 const route = useRoute()
@@ -8,11 +8,17 @@ const submitClass = ref('submit')
 const id = route.params.id;
 const input_content = ref('');
 async function updateTodo(){
-    const createdAt = id;
-    const docRef = doc(db, 'tasks', where('createdAt', '==', createdAt));
-    await updateDoc(docRef,{
-        taskName: input_content.value
-    }, {merge:true})
+    const createdAt = Number(id);
+    const entryRef = collection(db, 'tasks', {createdAt: createdAt});
+    updateDoc(entryRef, {
+        taskName:input_content.value
+    }, {merge:true}).then(() => {
+        console.log('Entry updated sucessfully');
+    }).catch(() => {
+        console.log('Error aagya');
+    })
+    const router = useRouter()
+    router.replace('/')
 }
 </script>
 
