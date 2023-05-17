@@ -3,7 +3,7 @@ import { ref, onMounted, watch} from 'vue'
 const emit = defineEmits(['todo-added'])
 const input_content = ref('')
 const submitClass = ref('submit')
-const todos = ref(JSON.parse(localStorage.getItem('todos')) || [])
+const todos = ref([])
 const addTodo = (e) => {
     if (!input_content.value.trim()) return;
     todos.value.push({
@@ -13,12 +13,9 @@ const addTodo = (e) => {
         hours: new Date().getHours(),
         mins: new Date().getMinutes()
     })
-    emit('todo-added', input_content.value)
+    const obj = todos.value[todos.value.length - 1];
+    emit('todo-added', obj);
 }
-
-watch(todos, newTodo => {
-    localStorage.setItem('todos', JSON.stringify(newTodo))
-}, { deep: true })
 </script>
 
 <template>

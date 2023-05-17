@@ -3,9 +3,11 @@ import { ref, onMounted, watch } from 'vue'
 const props = defineProps({
     title: String
 })
+const emit = defineEmits(['name'])
 const name = ref('')
 watch(name, (newValue) => {
     localStorage.setItem('name', newValue)
+    emit('name', newValue)
 })
 onMounted(() => {
     name.value = localStorage.getItem('name') || ''

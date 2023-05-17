@@ -1,9 +1,11 @@
 <script setup>
-import {ref, computed, watch} from 'vue';
+import {ref, computed, watch, onBeforeMount} from 'vue';
+import { query, doc, getDocs, collection, where } from 'firebase/firestore';
+import db from '../firebase/init';
 const emit = defineEmits(['deletedTask'])
 const buttonClass = ref("button")
 const taskClass = ref("task")
-const todos = ref(JSON.parse(localStorage.getItem('todos')) || [])
+const todos = ref([])
 const todos_asc = computed(() => todos.value.sort((a, b) => b.createdAt - a.createdAt));
 const deleteTask = todo => {
     todos.value = todos.value.filter(t => t != todo)
@@ -12,6 +14,16 @@ const deleteTask = todo => {
 watch(todos, newTodo => {
     localStorage.setItem('todos', JSON.stringify(newTodo))
 }, { deep: true })
+
+async function getTodos() {
+    const todo = await getDocs(collection(db, 'tasks'))
+    todo.forEach((dat) => {
+        todos.value.push(dat.data());
+    })
+}
+onBeforeMount(() => {
+    getTodos();
+})
 </script>
 
 <template>
@@ -23,7 +35,9 @@ watch(todos, newTodo => {
                     <h3>Added At: {{ todo.hours }}:{{ todo.mins }}</h3>
                     <label for="isDone">Done ? </label>
                     <button :class="buttonClass" @click = "deleteTask(todo)">Remove Task</button>
-                </div>
+                <button :class="buttonClass" > <RouterLink :to="'/edit/' + todo.createdAt">Update Task</RouterLink> </button>
+                    
+            </div>
             </div>
         </section>
 </template>
