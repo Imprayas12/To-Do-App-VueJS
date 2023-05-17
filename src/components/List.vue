@@ -1,5 +1,5 @@
 <script setup>
-import {ref, computed} from 'vue';
+import {ref, computed, watch} from 'vue';
 const emit = defineEmits(['deletedTask'])
 const buttonClass = ref("button")
 const taskClass = ref("task")
@@ -9,6 +9,9 @@ const deleteTask = todo => {
     todos.value = todos.value.filter(t => t != todo)
     emit('deletedTask', todo.taskName)
 }
+watch(todos, newTodo => {
+    localStorage.setItem('todos', JSON.stringify(newTodo))
+}, { deep: true })
 </script>
 
 <template>
