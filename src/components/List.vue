@@ -34,7 +34,7 @@ onBeforeMount(() => {
                     <h2>{{todo.taskName}}</h2>
                     <h3>Added At: {{ todo.hours }}:{{ todo.mins }}</h3>
                     <label for="isDone">Done ? </label>
-                    <button :class="buttonClass" @click = "deleteTask(todo)">Remove Task</button>
+                    <button :class="buttonClass" ><RouterLink :to="'/delete/' + todo.createdAt">Delete Task</RouterLink></button>
                 <button :class="buttonClass" > <RouterLink :to="'/edit/' + todo.createdAt">Update Task</RouterLink> </button>
                     
             </div>

@@ -2,6 +2,7 @@ import {createRouter, createWebHistory } from 'vue-router'
 import Home from './components/Home.vue'
 import User from './components/User.vue'
 import Edit from './components/Edit.vue'
+import Delete from './components/Delete.vue'
 const routes = [
     {
         name:'Home',
@@ -17,6 +18,11 @@ const routes = [
         name: 'Edit',
         path: '/edit/:id',
         component: Edit
+    },
+    {
+        name: 'delete',
+        path:'/delete/:id',
+        component: Delete
     }
 ];
 
