@@ -6,7 +6,7 @@ import Delete from './components/Delete.vue'
 const routes = [
     {
         name:'Home',
-        path:'/',
+        path:'/main/:username',
         component: Home
     },
     {

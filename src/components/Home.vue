@@ -5,7 +5,9 @@ import NewTodo from './NewTodo.vue';
 import List from './List.vue';
 import db from '../firebase/init';
 import {collection, addDoc} from 'firebase/firestore';
-
+import { useRoute } from 'vue-router';
+const route = useRoute()
+const name = route.params.username;
 const obj = ref([]);
 
 async function createUser(object) {
@@ -32,8 +34,7 @@ onMounted(() => {
 
 <template>
     <main>
-        
-        <Greetings title="Welcome to Opus" @name = "addName"/>
+        <Greetings title="Welcome to Opus" name = "prayas"/>
         <br>
         <NewTodo @todo-added = "handleToDoAdded"/>
         <br>
